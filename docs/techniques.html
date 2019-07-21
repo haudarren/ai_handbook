@@ -25,7 +25,7 @@
 <meta name="author" content="Darren Hau, Andrew Milich, Anna Mitchell, Raya Kuo, Samuel Ching, Zach Gleicher, and Jonathan Rosenberg">
 
 
-<meta name="date" content="2019-05-25">
+<meta name="date" content="2019-07-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -162,7 +162,7 @@
 <li class="chapter" data-level="7.7.1" data-path="techniques.html"><a href="techniques.html#autoencoders"><i class="fa fa-check"></i><b>7.7.1</b> Autoencoders</a></li>
 <li class="chapter" data-level="7.7.2" data-path="techniques.html"><a href="techniques.html#generative-adversarial-networks"><i class="fa fa-check"></i><b>7.7.2</b> Generative Adversarial Networks</a></li>
 </ul></li>
-<li class="chapter" data-level="7.8" data-path="techniques.html"><a href="techniques.html#reinforcement-learning"><i class="fa fa-check"></i><b>7.8</b> ??? (Reinforcement Learning)</a></li>
+<li class="chapter" data-level="7.8" data-path="techniques.html"><a href="techniques.html#reinforcement-learning"><i class="fa fa-check"></i><b>7.8</b> Reinforcement Learning</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="practical-concepts.html"><a href="practical-concepts.html"><i class="fa fa-check"></i><b>8</b> Practical Concepts</a><ul>
 <li class="chapter" data-level="8.1" data-path="practical-concepts.html"><a href="practical-concepts.html#gradient-descent"><i class="fa fa-check"></i><b>8.1</b> Gradient Descent</a></li>
@@ -170,6 +170,7 @@
 <li class="chapter" data-level="8.3" data-path="practical-concepts.html"><a href="practical-concepts.html#cross-validation-hyperparameter-tuning"><i class="fa fa-check"></i><b>8.3</b> Cross-Validation &amp; Hyperparameter Tuning</a></li>
 <li class="chapter" data-level="8.4" data-path="practical-concepts.html"><a href="practical-concepts.html#transfer-learning"><i class="fa fa-check"></i><b>8.4</b> Transfer Learning</a></li>
 <li class="chapter" data-level="8.5" data-path="practical-concepts.html"><a href="practical-concepts.html#data-augmentation"><i class="fa fa-check"></i><b>8.5</b> Data Augmentation</a></li>
+<li class="chapter" data-level="8.6" data-path="practical-concepts.html"><a href="practical-concepts.html#automl"><i class="fa fa-check"></i><b>8.6</b> AutoML</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="advanced-concepts.html"><a href="advanced-concepts.html"><i class="fa fa-check"></i><b>9</b> Advanced Concepts</a><ul>
 <li class="chapter" data-level="9.1" data-path="advanced-concepts.html"><a href="advanced-concepts.html#entropy-and-cross-entropy"><i class="fa fa-check"></i><b>9.1</b> Entropy and Cross-Entropy</a></li>
@@ -590,14 +591,23 @@
 <h2><span class="header-section-number">7.6</span> Dimensionality Reduction (Unsupervised)</h2>
 <div id="pca" class="section level3">
 <h3><span class="header-section-number">7.6.1</span> PCA</h3>
-<p>Summary:</p>
+<p>PCA, short for Principal Components Analysis, is a dimensionality reduction technique. All dimensionality reduction techniques seek to transform a large dataset containing many features to a smaller dataset with fewer features while preserving as much information as possible.</p>
+<p>One analogy is RAW image files versus lossy image files (e.g. JPEG / PNG). The RAW image files contain a lot of information, but requires significant storage space. JPEG images, on the other hand, are much smaller files with little perceptible loss in image quality.</p>
+<p>The motivation behind PCA includes visualizing the relationships between a large number of features, removing linear correlations between features and understanding the internal and underlying structure of a dataset.</p>
+<p>The intuition behind the PCA technique is to find the different orthogonal features which best explains the variance in the data. For each PCA, the input will be the set of original features and the output will be a set of reconstituted features (the principal components).</p>
+<p>Take an individual stock in the stock market for instance. Each stock is described by various features, such as the daily volume traded, its daily returns, the moving averages, the profit margins of the company and so on. As expected, these features are often correlated with each other. When we compare different stocks, there is a whole universe of different features which we could use to compare them. Yet, we know that many of these features are related. PCA helps us to prune the number of features. It constructs new linearly uncorrelated features (from the existing pool of features) which we can use to compare different stocks.</p>
+<p>What then are these <em>principal components</em>? Principal components are orthogonal (linearly uncorrelated) features. The engine under the hood is simply solving for and ranking the eigenvectors with the highest eigenvalues in the dataset. Each principal component will provide a new angle from which to understand the data. This is because the relationships between the values in the dataset will be re-organized based on the new dimensions produced by PCA.</p>
+<p>Since each principal component is composed of a weighting of the original feature set, we can understand which of the original features are linearly correlated to each other. We can also understand which of the original features contribute to the maximal variance in the dataset. For instance, if one feature is strongly represented in the first principal component, we can argue that that particular feature has more explanatory power about the variance in the dataset than the other features.</p>
+<p><strong>Limitations of PCA</strong></p>
 <ul>
-<li>Inputs:</li>
-<li>Outputs:</li>
-<li>Potential pitfalls:</li>
+<li>Sensitivity to the scaling of the variables. For instance, if we use centimeters instead of meters for a feature, that feature will be weighted as contributing more to the principal components than before.</li>
+<li>Limited to linear correlations. PCA is only able to capture linear correlations between features. If there are non-linear correlations between the original features, the reconstituted principal components will not remove these correlations.</li>
 </ul>
-<p>Useful Resources:</p>
+<p><strong>Resources for PCA</strong></p>
 <ul>
+<li><a href="https://towardsdatascience.com/a-step-by-step-explanation-of-principal-component-analysis-b836fb9c97e2">A step by step explanation of Principal Component Analysis, February 2019</a></li>
+<li><a href="https://stats.stackexchange.com/questions/2691/making-sense-of-principal-component-analysis-eigenvectors-eigenvalues">Making sense of Principal Component Analysis</a></li>
+<li><a href="https://ourarchive.otago.ac.nz/bitstream/handle/10523/7534/OUCS-2002-12.pdf?sequence=1&amp;isAllowed=y">A tutorial on Principal Components Analysis, University of Otago</a></li>
 <li><a href="https://medium.com/@luckylwk/visualising-high-dimensional-datasets-using-pca-and-t-sne-in-python-8ef87e7915b">Visualising high-dimensional datasets using PCA and t-SNE in Python (October 2016, Medium)</a></li>
 </ul>
 </div>
@@ -665,7 +675,37 @@
 </div>
 </div>
 <div id="reinforcement-learning" class="section level2">
-<h2><span class="header-section-number">7.8</span> ??? (Reinforcement Learning)</h2>
+<h2><span class="header-section-number">7.8</span> Reinforcement Learning</h2>
+<p>Reinforcement learning (RL) is a “type of machine learning technique that enables an agent to learn in an interactive environment by trial and error using feedback from its own actions and experiences” (KDNuggets).</p>
+<p>The most intuitive way to understand RL is to think about a child and how they learn to adapt to the world around them. When a child is a toddler and still unable to talk, they take actions in the world which provide a stream of feedback signals to them. Each feedback signal provides the child with some information about the world around them as well as an indication of whether they should continue to taking that action or not. For example, if the toddler is hungry, they will cry (action) and they will get some food (feedback signal). If the toddler touches hot stove (action), they will scald themselves (feedback signal) and learn eventually not to do that. As they interact more with the environment around them, their behavior will be <em>reinforced</em> or <em>punished</em>. This is the basis of the reinforcement learning model.</p>
+<p>RL differs from the above supervised and unsupervised methods of machine learning. Unlike supervised learning, RL does not have a static training set of correct examples to learn from. Instead, RL agents receive signals from the environment which reward and punish negative behavior. Unlike fixed supervised learning training sets, the RL environment is often stochastic and non-deterministic in nature, much like the real world.</p>
+<p>Unlike unsupervised learning, RL does not seek to find similarities or differences or other patterns in the data. Instead, RL agents respond to the reward signals given from the environment and seek to maximize their total cumulative reward by the end of each episode.</p>
+<p>The basic RL model is as follows:</p>
+<div class="figure">
+<img src="img/rlworld.png" />
+
+</div>
+<p>In a simplified RL world, the <em>input</em> will contain an agent and an environment. The environment is the world in which the RL agent operates in. At each time point, the environment will provide a particular <em>state</em> to the agent. This state describes the world in which the agent is in at that particular time point. The agent will then use a <em>policy</em> to decide which <em>action</em> to take in the environment. These actions will elicit a <em>reward</em> from the environment. This reward will then allow the agent to update its policy to modify the future actions that it will take.</p>
+<div class="figure">
+<img src="img/rlmario.gif" />
+
+</div>
+<p>For instance, in the gif above, Mario is receiving both direct reward (from its current action) as well as the estimated future reward, calculated using the current policy that it is following. If Mario touches an enemy, he’ll die. This will update the direct reward, as well as the policy for future runs.</p>
+<p>Historically, the field of RL developed out of the nexus of control theory, optimization and machine learning. As a result, many of its applications have been in the field of robotics (such as autonomous flight control). The current focus of RL research, however, has been focused on games such as classical board games like Chess and Go, as well as computer games from the simple such as Sonic the Hedgehog to more complex ones such as StarCraft 2 and DOTA 2.</p>
+<p>The main reason behind using games to build and develop RL algorithms is due to two main factors:</p>
+<ol style="list-style-type: decimal">
+<li><p>Being able to generate unlimited amounts of experience. Spinning up instances of new games is relatively trivial and can be parallelized on multiple machines. In many real life problems, it is difficult to construct an artificial world.</p></li>
+<li><p>Being able to shape a dense and well-defined reward function. In many games, creating a well-defined reward function is relatively easier to do. For instance, in Atari games, the speed at which a level is finished, coupled with not dying during the game, is a well-defined reward function. Further, games provide dense reward functions as the action-reward delay in an environment is small and consequently, providing a tight feedback loop. In many real-life scenarios, it is difficult to create a reward function which is both dense and well-defined. A sub-optimal reward function will lead to the RL agent optimizing for the wrong objective.</p></li>
+</ol>
+<p>No doubt, RL has been instrumental in breakthroughs in playing <a href="https://deepmind.com/research/alphago/">classical</a> <a href="https://deepmind.com/blog/alphazero-shedding-new-light-grand-games-chess-shogi-and-go/">games</a>, more complex <a href="https://deepmind.com/blog/alphastar-mastering-real-time-strategy-game-starcraft-ii/">computer</a> <a href="https://openai.com/five/">games</a>, optimizing <a href="https://deepmind.com/applied/deepmind-google/">data center efficiency</a> and <a href="https://deepmind.com/blog/alphafold/">protein folding</a>, generalizing RL to other use-cases remains a non-trivial problem. Sample inefficiency, definition of reward functions and difficulty of consistent reproduction all currently plague RL solutions.</p>
+<p>In sum, as Google Brain Engineer Alex Irpan puts it: “Whenever someone asks me if reinforcement learning can solve their problem, I tell them it can’t. I think this is right at least 70% of the time.” While there has been great interest in the RL paradigm, the real world use cases are currently limited and often require very specialized domain knowledge to accurately construct the environment and shape the rewards. As a result, it is often easier to apply and optimize shallow models (such as the ones elaborated on above) initially.</p>
+<p><strong>Useful Resources</strong></p>
+<ul>
+<li><a href="https://www.alexirpan.com/2018/02/14/rl-hard.html">Deep Reinforcement Learning Doesn’t Work Yet</a></li>
+<li><a href="https://spinningup.openai.com/en/latest/">Spinning Up: OpenAI DeepRL Introduction</a></li>
+<li><a href="https://skymind.ai/wiki/deep-reinforcement-learning">Skymind’s Deep RL Wiki</a></li>
+<li><a href="https://www.kdnuggets.com/2018/03/5-things-reinforcement-learning.html">5 Things You Need to Know about Reinforcement Learning</a></li>
+</ul>
 
 </div>
 </div>

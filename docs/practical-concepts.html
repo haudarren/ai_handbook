@@ -25,7 +25,7 @@
 <meta name="author" content="Darren Hau, Andrew Milich, Anna Mitchell, Raya Kuo, Samuel Ching, Zach Gleicher, and Jonathan Rosenberg">
 
 
-<meta name="date" content="2019-05-25">
+<meta name="date" content="2019-07-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -162,7 +162,7 @@
 <li class="chapter" data-level="7.7.1" data-path="techniques.html"><a href="techniques.html#autoencoders"><i class="fa fa-check"></i><b>7.7.1</b> Autoencoders</a></li>
 <li class="chapter" data-level="7.7.2" data-path="techniques.html"><a href="techniques.html#generative-adversarial-networks"><i class="fa fa-check"></i><b>7.7.2</b> Generative Adversarial Networks</a></li>
 </ul></li>
-<li class="chapter" data-level="7.8" data-path="techniques.html"><a href="techniques.html#reinforcement-learning"><i class="fa fa-check"></i><b>7.8</b> ??? (Reinforcement Learning)</a></li>
+<li class="chapter" data-level="7.8" data-path="techniques.html"><a href="techniques.html#reinforcement-learning"><i class="fa fa-check"></i><b>7.8</b> Reinforcement Learning</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="practical-concepts.html"><a href="practical-concepts.html"><i class="fa fa-check"></i><b>8</b> Practical Concepts</a><ul>
 <li class="chapter" data-level="8.1" data-path="practical-concepts.html"><a href="practical-concepts.html#gradient-descent"><i class="fa fa-check"></i><b>8.1</b> Gradient Descent</a></li>
@@ -170,6 +170,7 @@
 <li class="chapter" data-level="8.3" data-path="practical-concepts.html"><a href="practical-concepts.html#cross-validation-hyperparameter-tuning"><i class="fa fa-check"></i><b>8.3</b> Cross-Validation &amp; Hyperparameter Tuning</a></li>
 <li class="chapter" data-level="8.4" data-path="practical-concepts.html"><a href="practical-concepts.html#transfer-learning"><i class="fa fa-check"></i><b>8.4</b> Transfer Learning</a></li>
 <li class="chapter" data-level="8.5" data-path="practical-concepts.html"><a href="practical-concepts.html#data-augmentation"><i class="fa fa-check"></i><b>8.5</b> Data Augmentation</a></li>
+<li class="chapter" data-level="8.6" data-path="practical-concepts.html"><a href="practical-concepts.html#automl"><i class="fa fa-check"></i><b>8.6</b> AutoML</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="advanced-concepts.html"><a href="advanced-concepts.html"><i class="fa fa-check"></i><b>9</b> Advanced Concepts</a><ul>
 <li class="chapter" data-level="9.1" data-path="advanced-concepts.html"><a href="advanced-concepts.html#entropy-and-cross-entropy"><i class="fa fa-check"></i><b>9.1</b> Entropy and Cross-Entropy</a></li>
@@ -250,13 +251,65 @@
 </div>
 <div id="transfer-learning" class="section level2">
 <h2><span class="header-section-number">8.4</span> Transfer Learning</h2>
-<p>Useful Resources:</p>
+<p>Transfer learning, as its name suggests, is the technique of using knowledge learned from one task and applying it to a new but related task. For example, knowledge learned while trying to figure out how to classify images (of animals) into various animal groups can be transferred to some degree to the task of classifying images (of dogs) into various dog breeds.</p>
+<p>The main motive behind transfer learning is to reduce training requirements on both dataset size and computational power. In practice, large architectures, especially CNNs, are rarely trained from scratch because doing so requires not only a sufficiently large dataset, but also, in turn, sufficient computational power. It is more common to take a pre-trained model on a related task and apply it to the problem at hand.</p>
+<p>Generally, there are three broad ways this application can look:</p>
+<ol style="list-style-type: decimal">
+<li>Direct application. Simply apply the pre-trained model directly to the new task. This is probably the least common of the three because it is not trained specifically for the new and presumably somewhat different task.</li>
+<li>Feature extraction. Given a set of inputs, a pre-trained model (after removing the last output layer) can be used to vectorize each input into a list of features. The resulting input vectors can then be fed through a smaller classifier (e.g. any of the non-DL classifiers described above) to train a model on the new task.
+<ul>
+<li>When to use: Dataset is small. The reason is that fine-tuning a pre-trained model on a small dataset can lead to overfitting. Furthermore, it is important to select the appropriate layer of the pre-trained model to use as feature extractor. For example, if the inputs of the new task are quite related to those of the pre-trained model, you can consider using the second-to-last layer (basically the entire architecture minus the final output layer). The more unrelated the inputs, the earlier the feature extractor layer chosen should be because earlier layers capture more generic features, while later layers capture more dataset-specific features.</li>
+</ul></li>
+<li>Fine-tuning. In addition to replacing and training the classifier on top of the pre-trained model (as in the Feature Extraction application), this application also involves re-training, or fine-tuning, the weights of the pre-trained model. It is possible to choose which weights to fine-tune, and in fact, it is common to keep the weights of earlier layers fixed, and only fine-tune the later weights depending on how related the datasets are. It is important to keep the learning rate small when fine-tuning to avoid excessively perturbing the pre-trained weights, as we expect them to already be fairly good.
+<ul>
+<li>When to use: Dataset is large. When the dataset is large, it is less likely that fine-tuning will lead to overfitting, and as a result, we can confidently re-train the model weights. A sufficiently large dataset also allows for more effective training, especially for a deep neural net. As alluded to above, the more unrelated the datasets, the more weights we should re-train (keeping fewer weights fixed). Even if the datasets are very unrelated, in practice, it is often still advantageous to initialize with pre-trained weights and just fine-tune all of them.</li>
+</ul></li>
+</ol>
 <ul>
 <li><a href="http://cs231n.github.io/transfer-learning/">CS 231N: Transfer Learning</a></li>
+<li><a href="https://towardsdatascience.com/a-comprehensive-hands-on-guide-to-transfer-learning-with-real-world-applications-in-deep-learning-212bf3b2f27a">A Comprehensive Hands-on Guide to Transfer Learning with Real-World Applications in Deep Learning (November 2018, Towards Data Science)</a></li>
 </ul>
 </div>
 <div id="data-augmentation" class="section level2">
 <h2><span class="header-section-number">8.5</span> Data Augmentation</h2>
+</div>
+<div id="automl" class="section level2">
+<h2><span class="header-section-number">8.6</span> AutoML</h2>
+<p>Currently, a big limiting factor in scaling up the application of machine learning to various domains is the need for a team of specialists to support the end to end ML process. Everything from the ingestion of data, to data pre-processing, to feature engineering and model interpretation, requires individuals who deeply understand the various facets of the pipeline.</p>
+<div class="figure">
+<img src="img/automl.png" />
+
+</div>
+<p>Automated machine learning (autoML) seeks to abstract away much of the technical processes required for each of these stages. It helps to automate the end to end machine learning pipeline to enable more non-experts to develop and scale effective and robust predictive models.</p>
+<p>There are some broad categories of autoML, namely, automated data preparation and ingestion, automated feature engineering and hyperparameter tuning as well as automated model selection. Different autoML providers target different stages of the pipeline. For instance, the open source packages auto-sklearn and ATM (auto-tune models) automate hyperparameter optimization and model selection, while TPOT creates entire end to end pipelines using genetic programming.</p>
+<p><strong>Limitations</strong></p>
+<ul>
+<li>While autoML is useful in abstracting away the nitty gritty details of ML implementation, it could potentially exacerbate model complexity. Without model interpretability, there might be a tendency to treat the autoML models as a black box. As a black box, model predictions might be difficult to understand and interpret. While open source autoML packages such as Featuretools has a built in module to explain predictions, many autoML packages still do not.</li>
+<li>Further, autoML typically works well in supervised learning scenarios where there is a clear measure of success. In unsupervised or reinforcement learning environments, there does not exist an objective function which automated models could optimize for easily.</li>
+<li>Finally, feature extraction and engineering is still best performed by specialists with embedded knowledge expertise. While autoML tools can infer generic feature types from similarly structured datasets, the best features still come from heuristics based on experience in the field.</li>
+</ul>
+<p><strong>Current AutoML commercial providers</strong></p>
+<ul>
+<li><a href="http://auger.ai">Auger.ai</a></li>
+<li>DataRobot</li>
+<li>Google AutoML</li>
+<li>Microsoft Azure AutoML</li>
+<li>OneClick.ai</li>
+</ul>
+<p><strong>Current AutoML open source packages</strong></p>
+<ul>
+<li>Auto-sklearn</li>
+<li>Auto-Tune Models</li>
+<li>Caret</li>
+<li>H2O</li>
+<li>TPOT</li>
+</ul>
+<p><strong>Resources</strong></p>
+<ul>
+<li><a href="https://www.kdnuggets.com/2019/01/building-ai-to-build-ai-neurips-automl-challenge.html">Building AI to Build AI at NeurIPS (Kdnuggets, January 2019)</a></li>
+<li><a href="https://www.kdnuggets.com/2019/03/why-automl-wont-replace-data-scientists.html">Why AutoML Won’t Replace Data Scientists Yet (Kdnuggets, March 2019)</a></li>
+<li><a href="https://heartbeat.fritz.ai/automl-the-next-wave-of-machine-learning-5494baac615f">AutoML, the next wave of machine learning</a></li>
+</ul>
 
 </div>
 </div>

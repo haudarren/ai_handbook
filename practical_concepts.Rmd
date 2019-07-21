@@ -44,9 +44,21 @@ Useful Resources:
 
 ## Transfer Learning
 
-Useful Resources:
+Transfer learning, as its name suggests, is the technique of using knowledge learned from one task and applying it to a new but related task. For example, knowledge learned while trying to figure out how to classify images (of animals) into various animal groups can be transferred to some degree to the task of classifying images (of dogs) into various dog breeds. 
+
+The main motive behind transfer learning is to reduce training requirements on both dataset size and computational power. In practice, large architectures, especially CNNs, are rarely trained from scratch because doing so requires not only a sufficiently large dataset, but also, in turn, sufficient computational power. It is more common to take a pre-trained model on a related task and apply it to the problem at hand. 
+
+Generally, there are three broad ways this application can look:
+
+1. Direct application. Simply apply the pre-trained model directly to the new task. This is probably the least common of the three because it is not trained specifically for the new and presumably somewhat different task.
+2. Feature extraction. Given a set of inputs, a pre-trained model (after removing the last output layer) can be used to vectorize each input into a list of features. The resulting input vectors can then be fed through a smaller classifier (e.g. any of the non-DL classifiers described above) to train a model on the new task. 
+    - When to use: Dataset is small. The reason is that fine-tuning a pre-trained model on a 
+small dataset can lead to overfitting. Furthermore, it is important to select the appropriate layer of the pre-trained model to use as feature extractor. For example, if the inputs of the new task are quite related to those of the pre-trained model, you can consider using the second-to-last layer (basically the entire architecture minus the final output layer). The more unrelated the inputs, the earlier the feature extractor layer chosen should be because earlier layers capture more generic features, while later layers capture more dataset-specific features.
+3. Fine-tuning. In addition to replacing and training the classifier on top of the pre-trained model (as in the Feature Extraction application), this application also involves re-training, or fine-tuning, the weights of the pre-trained model. It is possible to choose which weights to fine-tune, and in fact, it is common to keep the weights of earlier layers fixed, and only fine-tune the later weights depending on how related the datasets are. It is important to keep the learning rate small when fine-tuning to avoid excessively perturbing the pre-trained weights, as we expect them to already be fairly good.
+    - When to use: Dataset is large. When the dataset is large, it is less likely that fine-tuning will lead to overfitting, and as a result, we can confidently re-train the model weights. A sufficiently large dataset also allows for more effective training, especially for a deep neural net. As alluded to above, the more unrelated the datasets, the more weights we should re-train (keeping fewer weights fixed). Even if the datasets are very unrelated, in practice, it is often still advantageous to initialize with pre-trained weights and just fine-tune all of them. 
 
 - [CS 231N: Transfer Learning](http://cs231n.github.io/transfer-learning/)
+- [A Comprehensive Hands-on Guide to Transfer Learning with Real-World Applications in Deep Learning (November 2018, Towards Data Science)](https://towardsdatascience.com/a-comprehensive-hands-on-guide-to-transfer-learning-with-real-world-applications-in-deep-learning-212bf3b2f27a)
 
 ## Data Augmentation
 
