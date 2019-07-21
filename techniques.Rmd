@@ -336,14 +336,30 @@ Useful Resources:
 
 ### PCA
 
-Summary:
+PCA, short for Principal Components Analysis, is a dimensionality reduction technique. All dimensionality reduction techniques seek to transform a large dataset containing many features to a smaller dataset with fewer features while preserving as much information as possible. 
 
-- Inputs:
-- Outputs:
-- Potential pitfalls:
+One analogy is RAW image files versus lossy image files (e.g. JPEG / PNG). The RAW image files contain a lot of information, but requires significant storage space. JPEG images, on the other hand, are much smaller files with little perceptible loss in image quality. 
 
-Useful Resources:
+The motivation behind PCA includes visualizing the relationships between a large number of features, removing linear correlations between features and understanding the internal and underlying structure of a dataset. 
 
+The intuition behind the PCA technique is to find the different orthogonal features which best explains the variance in the data. For each PCA, the input will be the set of original features and the output will be a set of reconstituted features (the principal components). 
+
+Take an individual stock in the stock market for instance. Each stock is described by various features, such as the daily volume traded, its daily returns, the moving averages, the profit margins of the company and so on. As expected, these features are often correlated with each other. When we compare different stocks, there is a whole universe of different features which we could use to compare them. Yet, we know that many of these features are related. PCA helps us to prune the number of features. It constructs new linearly uncorrelated features (from the existing pool of features) which we can use to compare different stocks.
+
+What then are these *principal components*? Principal components are orthogonal (linearly uncorrelated) features. The engine under the hood is simply solving for and ranking the eigenvectors with the highest eigenvalues in the dataset. Each principal component will provide a new angle from which to understand the data. This is because the relationships between the values in the dataset will be re-organized based on the new dimensions produced by PCA. 
+
+Since each principal component is composed of a weighting of the original feature set, we can understand which of the original features are linearly correlated to each other. We can also understand which of the original features contribute to the maximal variance in the dataset. For instance, if one feature is strongly represented in the first principal component, we can argue that that particular feature has more explanatory power about the variance in the dataset than the other features.
+
+**Limitations of PCA**
+
+- Sensitivity to the scaling of the variables. For instance, if we use centimeters instead of meters for a feature, that feature will be weighted as contributing more to the principal components than before.
+- Limited to linear correlations. PCA is only able to capture linear correlations between features. If there are non-linear correlations between the original features, the reconstituted principal components will not remove these correlations.
+
+**Resources for PCA**
+
+- [A step by step explanation of Principal Component Analysis, February 2019](https://towardsdatascience.com/a-step-by-step-explanation-of-principal-component-analysis-b836fb9c97e2)
+- [Making sense of Principal Component Analysis](https://stats.stackexchange.com/questions/2691/making-sense-of-principal-component-analysis-eigenvectors-eigenvalues)
+- [A tutorial on Principal Components Analysis, University of Otago](https://ourarchive.otago.ac.nz/bitstream/handle/10523/7534/OUCS-2002-12.pdf?sequence=1&isAllowed=y)
 - [Visualising high-dimensional datasets using PCA and t-SNE in Python (October 2016, Medium)](https://medium.com/@luckylwk/visualising-high-dimensional-datasets-using-pca-and-t-sne-in-python-8ef87e7915b)
 
 ### t-SNE
@@ -404,4 +420,41 @@ Summary:
 
 Useful Resources:
 
-## ??? (Reinforcement Learning)
+## Reinforcement Learning
+
+Reinforcement learning (RL) is a "type of machine learning technique that enables an agent to learn in an interactive environment by trial and error using feedback from its own actions and experiences" (KDNuggets). 
+
+The most intuitive way to understand RL is to think about a child and how they learn to adapt to the world around them. When a child is a toddler and still unable to talk, they take actions in the world which provide a stream of feedback signals to them. Each feedback signal provides the child with some information about the world around them as well as an indication of whether they should continue to taking that action or not. For example, if the toddler is hungry, they will cry (action) and they will get some food (feedback signal). If the toddler touches hot stove (action), they will scald themselves (feedback signal) and learn eventually not to do that. As they interact more with the environment around them, their behavior will be *reinforced* or *punished*. This is the basis of the reinforcement learning model.
+
+RL differs from the above supervised and unsupervised methods of machine learning. Unlike supervised learning, RL does not have a static training set of correct examples to learn from. Instead, RL agents receive signals from the environment which reward and punish negative behavior. Unlike fixed supervised learning training sets, the RL environment is often stochastic and non-deterministic in nature, much like the real world. 
+
+Unlike unsupervised learning, RL does not seek to find similarities or differences or other patterns in the data. Instead, RL agents respond to the reward signals given from the environment and seek to maximize their total cumulative reward by the end of each episode.
+
+The basic RL model is as follows:
+
+![](img/rlworld.png)
+
+In a simplified RL world, the *input* will contain an agent and an environment. The environment is the world in which the RL agent operates in. At each time point, the environment will provide a particular *state* to the agent. This state describes the world in which the agent is in at that particular time point. The agent will then use a *policy* to decide which *action* to take in the environment. These actions will elicit a *reward* from the environment. This reward will then allow the agent to update its policy to modify the future actions that it will take.
+
+![](img/rlmario.gif)
+
+For instance, in the gif above, Mario is receiving both direct reward (from its current action) as well as the estimated future reward, calculated using the current policy that it is following. If Mario touches an enemy, he'll die. This will update the direct reward, as well as the policy for future runs.
+
+Historically, the field of RL developed out of the nexus of control theory, optimization and machine learning. As a result, many of its applications have been in the field of robotics (such as autonomous flight control). The current focus of RL research, however, has been focused on games such as classical board games like Chess and Go, as well as computer games from the simple such as Sonic the Hedgehog to more complex ones such as StarCraft 2 and DOTA 2. 
+
+The main reason behind using games to build and develop RL algorithms is due to two main factors: 
+
+1. Being able to generate unlimited amounts of experience. Spinning up instances of new games is relatively trivial and can be parallelized on multiple machines. In many real life problems, it is difficult to construct an artificial world.
+
+2. Being able to shape a dense and well-defined reward function. In many games, creating a well-defined reward function is relatively easier to do. For instance, in Atari games, the speed at which a level is finished, coupled with not dying during the game, is a well-defined reward function. Further, games provide dense reward functions as the action-reward delay in an environment is small and consequently, providing a tight feedback loop. In many real-life scenarios, it is difficult to create a reward function which is both dense and well-defined. A sub-optimal reward function will lead to the RL agent optimizing for the wrong objective.
+
+No doubt, RL has been instrumental in breakthroughs in playing [classical](https://deepmind.com/research/alphago/) [games](https://deepmind.com/blog/alphazero-shedding-new-light-grand-games-chess-shogi-and-go/), more complex [computer](https://deepmind.com/blog/alphastar-mastering-real-time-strategy-game-starcraft-ii/) [games](https://openai.com/five/), optimizing [data center efficiency](https://deepmind.com/applied/deepmind-google/) and [protein folding](https://deepmind.com/blog/alphafold/), generalizing RL to other use-cases remains a non-trivial problem. Sample inefficiency, definition of reward functions and difficulty of consistent reproduction all currently plague RL solutions. 
+
+In sum, as Google Brain Engineer Alex Irpan puts it: "Whenever someone asks me if reinforcement learning can solve their problem, I tell them it can’t. I think this is right at least 70% of the time." While there has been great interest in the RL paradigm, the real world use cases are currently limited and often require very specialized domain knowledge to accurately construct the environment and shape the rewards. As a result, it is often easier to apply and optimize shallow models (such as the ones elaborated on above) initially.
+
+**Useful Resources**
+
+- [Deep Reinforcement Learning Doesn't Work Yet](https://www.alexirpan.com/2018/02/14/rl-hard.html)
+- [Spinning Up: OpenAI DeepRL Introduction](https://spinningup.openai.com/en/latest/)
+- [Skymind's Deep RL Wiki](https://skymind.ai/wiki/deep-reinforcement-learning)
+- [5 Things You Need to Know about Reinforcement Learning](https://www.kdnuggets.com/2018/03/5-things-reinforcement-learning.html)
