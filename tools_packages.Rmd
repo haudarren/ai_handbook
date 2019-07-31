@@ -1,4 +1,18 @@
-# Tools & Packages {#tools_packages} 
+# Tools & Packages {#tools_packages}
+
+## Libraries
+
+- [Fast.ai](https://docs.fast.ai)
+    - [Github page](https://github.com/fastai/fastai)
+    - Simplifies training fast and accurate neural nets using modern best practices, abstracting away all of the nitty gritty work that can come with implementing deep neural networks in practice.
+    
+- [Detectron](https://ai.facebook.com/tools/detectron/)
+    - [Github page](https://github.com/facebookresearch/Detectron)
+    - Detectron is Facebook AI’s research platform for object detection and instance segmentation research, written in Caffe2.
+    
+- [FastText](https://research.fb.com/blog/2016/08/fasttext/)
+    - [Github page](https://github.com/facebookresearch/fastText)
+    - Designed for efficient learning of word representations and sentence classification.
 
 ## Open-Source
 
