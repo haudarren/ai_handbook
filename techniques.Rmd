@@ -458,3 +458,49 @@ In sum, as Google Brain Engineer Alex Irpan puts it: "Whenever someone asks me i
 - [Spinning Up: OpenAI DeepRL Introduction](https://spinningup.openai.com/en/latest/)
 - [Skymind's Deep RL Wiki](https://skymind.ai/wiki/deep-reinforcement-learning)
 - [5 Things You Need to Know about Reinforcement Learning](https://www.kdnuggets.com/2018/03/5-things-reinforcement-learning.html)
+
+## Bayesian Optimization
+
+In machine learning, we always want to optimize some objective function (usually minimize a cost function).  In the ideal scenario, the function $f$ is known, has a closed analytical form, and is differentiable - which enables us to use gradient descent.  However, if $f$ has any number of these traits, traditional gradient descent becomes infeasible:
+
+- $f$ is expensive to calculate in terms of time, money, or other resource (i.e. growing plants).
+- $f$ lacks any special structure like concavity or linearity and is a "black-box function".
+- When we evaluate $f$, we observe only $f(x)$ and no first- or second-order derivatives.
+- Our focus is on obtaining a global rather than local optimum.
+
+In these cases, we can turn to Bayesian optimization to determine the next point to evaluate which is most likely to yield an improvement.  Due to these characteristics, Bayesian optimization has become popular for many applications, such as tuning hyperparameters in machine learning algorithms (particularly neural networks) and choosing laboratory experiments in materials and drug design.
+
+Bayesian optimization consists of two main components:
+
+1. A Bayesian statistical model for modeling the objective function.
+2. An acquisition function for determining where to sample next.
+
+The pseudo-code for Bayesian optimization is as follows:
+
+```
+Set a maximum number of evaluations N
+Place a Gaussian process prior on objective function 'f'
+Observe 'f' at n0 initial points and set n = n0
+while n <= N do:
+  Update posterior probability distribution on 'f' using all available data
+  Calculate acquisition function 'a' using the posterior
+  Let x* be the value which maximizes 'a'
+  Observe y* = f(x*)
+  Increment n
+end while
+Return a solution x out of the evaluated points for which f(x) was best
+```
+
+The Gaussian process prior helps define the uncertainty in the black-box function.  At each evaluated point, we squash the uncertainty (to zero if the function evaluation has no noise), which affects the expected value $\mu(x)$ and uncertainty $\sigma(x)$ at the remaining unknown points.
+
+![](img/bayesopt_1.png)
+
+The acquisition function (which we will leave to the following excellent resources to discuss) suggest the next point to evaluate.
+
+![](img/bayesopt_2.png)
+
+Useful Resources:
+
+- [A tutorial on Bayesian optimization in R](https://bearloga.github.io/bayesopt-tutorial-r/)
+- [A tutorial on Bayesian Optimization](https://arxiv.org/pdf/1807.02811.pdf)
+- [MLSS 2012: J. Cunningham - Gaussian Processes for Machine Learning (Part 1)](https://www.youtube.com/watch?v=BS4Wd5rwNwE)

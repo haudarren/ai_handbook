@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Techniques | The AI Handbook</title>
-  <meta name="description" content="A handbook for technical and non-technical AI stakeholders.">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="A handbook for technical and non-technical AI stakeholders." />
+  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Techniques | The AI Handbook" />
   <meta property="og:type" content="book" />
@@ -22,14 +21,14 @@
   <meta name="twitter:description" content="A handbook for technical and non-technical AI stakeholders." />
   
 
-<meta name="author" content="Darren Hau, Andrew Milich, Anna Mitchell, Raya Kuo, Samuel Ching, Zach Gleicher, and Jonathan Rosenberg">
+<meta name="author" content="Darren Hau, Andrew Milich, Samuel Ching, Anna Mitchell, Raya Kuo, Glenn Yu, Zach Gleicher, and Jonathan Rosenberg" />
 
 
-<meta name="date" content="2019-07-21">
+<meta name="date" content="2019-08-20" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
 <link rel="prev" href="themes.html">
@@ -163,6 +162,7 @@
 <li class="chapter" data-level="7.7.2" data-path="techniques.html"><a href="techniques.html#generative-adversarial-networks"><i class="fa fa-check"></i><b>7.7.2</b> Generative Adversarial Networks</a></li>
 </ul></li>
 <li class="chapter" data-level="7.8" data-path="techniques.html"><a href="techniques.html#reinforcement-learning"><i class="fa fa-check"></i><b>7.8</b> Reinforcement Learning</a></li>
+<li class="chapter" data-level="7.9" data-path="techniques.html"><a href="techniques.html#bayesian-optimization"><i class="fa fa-check"></i><b>7.9</b> Bayesian Optimization</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="practical-concepts.html"><a href="practical-concepts.html"><i class="fa fa-check"></i><b>8</b> Practical Concepts</a><ul>
 <li class="chapter" data-level="8.1" data-path="practical-concepts.html"><a href="practical-concepts.html#gradient-descent"><i class="fa fa-check"></i><b>8.1</b> Gradient Descent</a></li>
@@ -187,9 +187,10 @@
 </ul></li>
 <li class="chapter" data-level="10" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i><b>10</b> Datasets</a></li>
 <li class="chapter" data-level="11" data-path="tools-packages.html"><a href="tools-packages.html"><i class="fa fa-check"></i><b>11</b> Tools &amp; Packages</a><ul>
-<li class="chapter" data-level="11.1" data-path="tools-packages.html"><a href="tools-packages.html#open-source"><i class="fa fa-check"></i><b>11.1</b> Open-Source</a></li>
-<li class="chapter" data-level="11.2" data-path="tools-packages.html"><a href="tools-packages.html#dataset-creation-with-weak-supervision"><i class="fa fa-check"></i><b>11.2</b> Dataset Creation with Weak Supervision</a></li>
-<li class="chapter" data-level="11.3" data-path="tools-packages.html"><a href="tools-packages.html#cloud-computing"><i class="fa fa-check"></i><b>11.3</b> Cloud Computing</a></li>
+<li class="chapter" data-level="11.1" data-path="tools-packages.html"><a href="tools-packages.html#libraries"><i class="fa fa-check"></i><b>11.1</b> Libraries</a></li>
+<li class="chapter" data-level="11.2" data-path="tools-packages.html"><a href="tools-packages.html#open-source"><i class="fa fa-check"></i><b>11.2</b> Open-Source</a></li>
+<li class="chapter" data-level="11.3" data-path="tools-packages.html"><a href="tools-packages.html#dataset-creation-with-weak-supervision"><i class="fa fa-check"></i><b>11.3</b> Dataset Creation with Weak Supervision</a></li>
+<li class="chapter" data-level="11.4" data-path="tools-packages.html"><a href="tools-packages.html#cloud-computing"><i class="fa fa-check"></i><b>11.4</b> Cloud Computing</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
@@ -705,6 +706,50 @@
 <li><a href="https://spinningup.openai.com/en/latest/">Spinning Up: OpenAI DeepRL Introduction</a></li>
 <li><a href="https://skymind.ai/wiki/deep-reinforcement-learning">Skymind’s Deep RL Wiki</a></li>
 <li><a href="https://www.kdnuggets.com/2018/03/5-things-reinforcement-learning.html">5 Things You Need to Know about Reinforcement Learning</a></li>
+</ul>
+</div>
+<div id="bayesian-optimization" class="section level2">
+<h2><span class="header-section-number">7.9</span> Bayesian Optimization</h2>
+<p>In machine learning, we always want to optimize some objective function (usually minimize a cost function). In the ideal scenario, the function <span class="math inline">\(f\)</span> is known, has a closed analytical form, and is differentiable - which enables us to use gradient descent. However, if <span class="math inline">\(f\)</span> has any number of these traits, traditional gradient descent becomes infeasible:</p>
+<ul>
+<li><span class="math inline">\(f\)</span> is expensive to calculate in terms of time, money, or other resource (i.e. growing plants).</li>
+<li><span class="math inline">\(f\)</span> lacks any special structure like concavity or linearity and is a “black-box function”.</li>
+<li>When we evaluate <span class="math inline">\(f\)</span>, we observe only <span class="math inline">\(f(x)\)</span> and no first- or second-order derivatives.</li>
+<li>Our focus is on obtaining a global rather than local optimum.</li>
+</ul>
+<p>In these cases, we can turn to Bayesian optimization to determine the next point to evaluate which is most likely to yield an improvement. Due to these characteristics, Bayesian optimization has become popular for many applications, such as tuning hyperparameters in machine learning algorithms (particularly neural networks) and choosing laboratory experiments in materials and drug design.</p>
+<p>Bayesian optimization consists of two main components:</p>
+<ol style="list-style-type: decimal">
+<li>A Bayesian statistical model for modeling the objective function.</li>
+<li>An acquisition function for determining where to sample next.</li>
+</ol>
+<p>The pseudo-code for Bayesian optimization is as follows:</p>
+<pre><code>Set a maximum number of evaluations N
+Place a Gaussian process prior on objective function &#39;f&#39;
+Observe &#39;f&#39; at n0 initial points and set n = n0
+while n &lt;= N do:
+  Update posterior probability distribution on &#39;f&#39; using all available data
+  Calculate acquisition function &#39;a&#39; using the posterior
+  Let x* be the value which maximizes &#39;a&#39;
+  Observe y* = f(x*)
+  Increment n
+end while
+Return a solution x out of the evaluated points for which f(x) was best</code></pre>
+<p>The Gaussian process prior helps define the uncertainty in the black-box function. At each evaluated point, we squash the uncertainty (to zero if the function evaluation has no noise), which affects the expected value <span class="math inline">\(\mu(x)\)</span> and uncertainty <span class="math inline">\(\sigma(x)\)</span> at the remaining unknown points.</p>
+<div class="figure">
+<img src="img/bayesopt_1.png" />
+
+</div>
+<p>The acquisition function (which we will leave to the following excellent resources to discuss) suggest the next point to evaluate.</p>
+<div class="figure">
+<img src="img/bayesopt_2.png" />
+
+</div>
+<p>Useful Resources:</p>
+<ul>
+<li><a href="https://bearloga.github.io/bayesopt-tutorial-r/">A tutorial on Bayesian optimization in R</a></li>
+<li><a href="https://arxiv.org/pdf/1807.02811.pdf">A tutorial on Bayesian Optimization</a></li>
+<li><a href="https://www.youtube.com/watch?v=BS4Wd5rwNwE">MLSS 2012: J. Cunningham - Gaussian Processes for Machine Learning (Part 1)</a></li>
 </ul>
 
 </div>
