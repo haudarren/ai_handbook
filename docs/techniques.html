@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Techniques | The AI Handbook</title>
   <meta name="description" content="A handbook for technical and non-technical AI stakeholders." />
-  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Techniques | The AI Handbook" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Darren Hau, Andrew Milich, Samuel Ching, Anna Mitchell, Raya Kuo, Glenn Yu, Zach Gleicher, and Jonathan Rosenberg" />
 
 
-<meta name="date" content="2019-08-20" />
+<meta name="date" content="2019-12-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="themes.html">
-<link rel="next" href="practical-concepts.html">
+<link rel="prev" href="themes.html"/>
+<link rel="next" href="practical-concepts.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -118,7 +121,7 @@
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="themes.html"><a href="themes.html#artificial-general-intelligence-agi"><i class="fa fa-check"></i><b>6.4</b> Artificial General Intelligence (AGI)</a></li>
 <li class="chapter" data-level="6.5" data-path="themes.html"><a href="themes.html#ethics"><i class="fa fa-check"></i><b>6.5</b> Ethics</a><ul>
-<li class="chapter" data-level="6.5.1" data-path="general.html"><a href="general.html#general"><i class="fa fa-check"></i><b>6.5.1</b> General</a></li>
+<li class="chapter" data-level="6.5.1" data-path="themes.html"><a href="themes.html#general-1"><i class="fa fa-check"></i><b>6.5.1</b> General</a></li>
 <li class="chapter" data-level="6.5.2" data-path="themes.html"><a href="themes.html#ai-weapons"><i class="fa fa-check"></i><b>6.5.2</b> AI Weapons</a></li>
 <li class="chapter" data-level="6.5.3" data-path="themes.html"><a href="themes.html#black-box-model-explainability"><i class="fa fa-check"></i><b>6.5.3</b> Black Box &amp; Model Explainability</a></li>
 <li class="chapter" data-level="6.5.4" data-path="themes.html"><a href="themes.html#model-bias"><i class="fa fa-check"></i><b>6.5.4</b> Model Bias</a></li>
@@ -238,16 +241,10 @@
 <div id="linear-regression" class="section level3">
 <h3><span class="header-section-number">7.1.1</span> Linear Regression</h3>
 <p>Linear regression uses a line to approximate the relationship between an independent variable and a dependent variable. The learning task is to find the correct line, given many labeled training examples (points on the graph).</p>
-<div class="figure">
-<img src="img/linear_regression_1.png" />
-
-</div>
+<p><img src="img/linear_regression_1.png" /></p>
 <p>A rudimentary example is predicting a house’s price from its square footage (in practice, models use many more input features; for interpretability we simplify to a single input feature). To train the model, you would feed it training examples labeled with ground truth: e.g. house 1 has 1,500 square feet and sold for $200,000; and house 2 has 3,000 square feet and sold for $500,000. The model’s goal is to learn a pattern from these square footage-housing price pairs. Then in the future, when given only a square footage, it can predict the price accurately.</p>
 <p>The pattern linear regression models learn is a simple line (with more features, this line is multi-dimensional). After the model outputs a line, prediction is easy. To predict a price from any given square footage, find the square footage on the x-axis, move upward to see the y-value of the line at this point, and output this as the predicted price. The diagram below shows this process. Gray points are the training examples; the red line was found by the model to fit these training examples most closely.</p>
-<div class="figure">
-<img src="img/linear_regression_2.png" />
-
-</div>
+<p><img src="img/linear_regression_2.png" /></p>
 <p>More concretely, the model tries to find a line in the form <code>y = Wx + b</code> (where <code>W</code> is the slope and <code>b</code> is the y-intercept) to fit its training data most tightly. Several methods exist for finding this <code>W</code> and <code>b</code>. Least-squares is a popular method, but other options, like ridge regression, are also available.</p>
 <p>Summary:</p>
 <ul>
@@ -262,7 +259,6 @@
 </ul></li>
 <li>Potential pitfalls:
 <ul>
-<li>Overfitting the dataset (high variance). Finding a line that is too specific to the training examples and doesn’t generalize well to the new examples.</li>
 <li>Not flexible enough for more complex datasets (high bias). Maybe the relationship between square footage and housing price isn’t linear! In that case, linear regression would not be the best choice; k-nearest-neighbors or some other approach that allows more complex decision boundaries would be better-suited.</li>
 </ul></li>
 </ul>
@@ -318,10 +314,7 @@
 </ul></li>
 </ul>
 <p>If <code>k = 1</code>, then the input object is simply assigned to the class or value of its single nearest neighbor.</p>
-<div class="figure">
-<img src="img/knn.png" />
-
-</div>
+<p><img src="img/knn.png" /></p>
 <p>Summary:</p>
 <ul>
 <li>Inputs:
@@ -366,7 +359,7 @@
 </div>
 <div id="logistic-regression" class="section level3">
 <h3><span class="header-section-number">7.3.2</span> Logistic Regression</h3>
-<p>Logistic regression is similar to linear regression in assuming a linear relationship between the dependent and independent variables. However, its name is misleading because unlike linear regression, it is used for classification.</p>
+<p>Logistic regression is similar to linear regression in assuming a linear relationship between the dependent and independent variables. However, it is most often used for classification tasks.</p>
 <p>The model outputs a probability that a training example belongs to each category. For example, it will calculate the probability that a tumor is benign or malignant. To compute this probability, logistic regression first computes the same linear function <code>Wx + b</code> on the input <code>x</code>, then feeds the result into a sigmoid function, which maps to outputs between 0 and 1, inclusive. This final output can then be interpreted as a probability. (Logistic regression can also be generalized to consider more than two categories. See sidenote.)</p>
 <p>The last step is to decide on the cutoff, or “decision boundary,” to classify the example. For example, we might say that if the probability of an tumor being malignant is greater than 0.7, it should be classified as malignant. This parameter can be tuned and can also be a function rather than a numerical threshold.</p>
 <p>Sidenote: Logistic regression can also be generalized to consider more than two categories. One way of doing this is to first train a 2-category model of Category A vs Non-Category A, then another model for Category B vs Not Category A or B, then another model for Category C vs Not A or B or C, and so on. To classify a vector, run through the models in sequence.</p>
@@ -423,17 +416,8 @@
 </div>
 <div id="support-vector-machines-svm" class="section level3">
 <h3><span class="header-section-number">7.3.4</span> Support Vector Machines (SVM)</h3>
-<p>Support Vector Machines are used for classification: they try to find a line that separates data in one category from data in another category. However, they provide two big improvements on logistic regression. First, they can fit nonlinear decision boundaries. For example, imagine your data looks like this:</p>
-<div class="figure">
-<img src="img/svm_1.png" />
-
-</div>
-<p>Clearly a diagonal line is not going to fit this data well; it would cut through the middle of both categories. SVM allows the classifier to learn a nonlinear decision boundary by using the “kernel trick,” which maps the data to a higher-dimensional space, then linearly separates the data in this higher-dimensional space. This translates to more complex decision boundaries in the lower-level space.</p>
-<p>SVMs can also improve classification by explicitly trying to maximize the space between the two categories. This space is called the “margin.” In the diagram below, the model found a line C that best maximized the distance between the two categories.</p>
-<div class="figure">
-<img src="img/svm_2.png" />
-
-</div>
+<p>Support Vector Machines are used for classification: they try to find a line that separates data in one category from data in another category. You can use SVMs if classification is improved by maximizing the space between the two categories. This space is called the “margin.” In the diagram below, the model found a line C that best maximized the distance between the two categories.</p>
+<p><img src="img/svm_2.png" /></p>
 <p>Summary:</p>
 <ul>
 <li>Inputs:</li>
@@ -474,10 +458,7 @@
 <h2><span class="header-section-number">7.4</span> Neural Networks (Supervised)</h2>
 <div id="convolutional-neural-networks-cnn" class="section level3">
 <h3><span class="header-section-number">7.4.1</span> Convolutional Neural Networks (CNN)</h3>
-<div class="figure">
-<img src="img/convnet.jpg" />
-
-</div>
+<p><img src="img/convnet.jpg" /></p>
 <p>Summary:</p>
 <ul>
 <li>Inputs:</li>
@@ -493,10 +474,7 @@
 <div id="recurrent-neural-networks-rnn" class="section level3">
 <h3><span class="header-section-number">7.4.2</span> Recurrent Neural Networks (RNN)</h3>
 <p>When we process sequence data, like reading a paragraph or listening to music, we often rely on the context of what we’ve processed before to make decisions about the future. A basic neural network doesn’t accomplish this - it can only make decisions based on the current input. Fortunately, recurrent neural networks (RNNs) come to the rescue!</p>
-<div class="figure">
-<img src="img/rnn.png" />
-
-</div>
+<p><img src="img/rnn.png" /></p>
 <p>An RNN is a neural network that generates not only an output, but also a “hidden state” that feeds back into itself. While this may seem complex, we can unroll this network in time to see how the hidden state feeds into the next timestep along with the next timestep’s inputs. This hidden state represents the context of previous inputs, so we aren’t throwing away previous learnings!</p>
 <p>In each timestep, we therefore incorporate the previous timestep’s context (or nothing at the start), along with the current input, to generate an output (i.e. the next word in a sentence translation).</p>
 <p>Summary:</p>
@@ -517,10 +495,7 @@
 <p>“If we are trying to predict the last word in ‘the clouds are in the sky,’ we don’t need any further context – it’s pretty obvious the next word is going to be sky. In such cases, where the gap between the relevant information and the place that it’s needed is small, RNNs can learn to use the past information.”</p>
 <p>On the other hand, “consider trying to predict the last word in the text ‘I grew up in France… I speak fluent French.’ Recent information suggests that the next word is probably the name of a language, but if we want to narrow down which language, we need the context of France, from further back. It’s entirely possible for the gap between the relevant information and the point where it is needed to become very large.”</p>
 <p>Due to a phenomenon known as the vanishing gradient problem (see Advanced Concepts section), an RNN’s capability to learn from information from many timesteps ago quickly diminishes. Fortunately, we have Long Short Term Memory networks (LSTMs) to the rescue!</p>
-<div class="figure">
-<img src="img/lstm.png" />
-
-</div>
+<p><img src="img/lstm.png" /></p>
 <p>Here’s the basic concept of an LSTM:</p>
 <ul>
 <li>Prior information is recorded in a cell state that is passed along at each timestep</li>
@@ -550,10 +525,7 @@
 <div id="k-means" class="section level3">
 <h3><span class="header-section-number">7.5.1</span> K-Means</h3>
 <p>K-means clustering is one of the most common ways to identify groups in your data. You start with unlabeled data (i.e. online customer sales data) and want to identify what clusters they can be bucketed into (i.e. customer archetypes).</p>
-<div class="figure">
-<img src="img/kmeans.gif" />
-
-</div>
+<p><img src="img/kmeans.gif" /></p>
 <p>How does it work? You define an objective function to minimize, initialize the number and location of cluster centroids (randomly or through a heuristic), and keep repeating the following steps until some criteria is met (i.e. 1000 iterations or objective function is sufficiently small):</p>
 <ol style="list-style-type: decimal">
 <li>Update the cluster assignments of each data point
@@ -634,17 +606,14 @@
 <ul>
 <li>Dimensionality reduction or encoding data
 <ul>
-<li>Example: “Visualizing high-dimensional data is challenging. t-SNE is the most commonly used method but struggles with large number of dimensions (typically above 32). So autoencoders are used as a preprocessing step to reduce the dimensionality, and this compressed representation is used by t-SNE to visualize the data in 2D space.”<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></li>
+<li>Example: “Visualizing high-dimensional data is challenging. t-SNE is the most commonly used method but struggles with large number of dimensions (typically above 32). So autoencoders are used as a preprocessing step to reduce the dimensionality, and this compressed representation is used by t-SNE to visualize the data in 2D space.”<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></li>
 </ul></li>
 <li>Denoise data
 <ul>
 <li>Example: You have a grainy image but the random pixel values that cause the “graininess” is not useful for classifying what the image is. You can adjust how you use the autoencoder by feeding it the grainy image and having it try to predict the clean image.</li>
 </ul></li>
 </ul>
-<div class="figure">
-<img src="img/autoencoder.png" />
-
-</div>
+<p><img src="img/autoencoder.png" /></p>
 <p>Autoencoders are comprised of two parts - an encoder neural network and a decoder neural network - and the inputs and outputs are the same. When the input is fed through the encoder, it is forced into a smaller, “lossy” representation due to the smaller number of neurons at the end of the encoder network. This compressed representation is then fed through the decoder, which tries to reconstruct the input. During the training process, the autoencoder therefore learns to approximate an identity function, and is forced to extract the most relevant features of the input.</p>
 <p>For the more technical folks, the function of an autoencoder is similar to principal component analysis (PCA).</p>
 <p>Summary:</p>
@@ -682,15 +651,9 @@
 <p>RL differs from the above supervised and unsupervised methods of machine learning. Unlike supervised learning, RL does not have a static training set of correct examples to learn from. Instead, RL agents receive signals from the environment which reward and punish negative behavior. Unlike fixed supervised learning training sets, the RL environment is often stochastic and non-deterministic in nature, much like the real world.</p>
 <p>Unlike unsupervised learning, RL does not seek to find similarities or differences or other patterns in the data. Instead, RL agents respond to the reward signals given from the environment and seek to maximize their total cumulative reward by the end of each episode.</p>
 <p>The basic RL model is as follows:</p>
-<div class="figure">
-<img src="img/rlworld.png" />
-
-</div>
+<p><img src="img/rlworld.png" /></p>
 <p>In a simplified RL world, the <em>input</em> will contain an agent and an environment. The environment is the world in which the RL agent operates in. At each time point, the environment will provide a particular <em>state</em> to the agent. This state describes the world in which the agent is in at that particular time point. The agent will then use a <em>policy</em> to decide which <em>action</em> to take in the environment. These actions will elicit a <em>reward</em> from the environment. This reward will then allow the agent to update its policy to modify the future actions that it will take.</p>
-<div class="figure">
-<img src="img/rlmario.gif" />
-
-</div>
+<p><img src="img/rlmario.gif" /></p>
 <p>For instance, in the gif above, Mario is receiving both direct reward (from its current action) as well as the estimated future reward, calculated using the current policy that it is following. If Mario touches an enemy, he’ll die. This will update the direct reward, as well as the policy for future runs.</p>
 <p>Historically, the field of RL developed out of the nexus of control theory, optimization and machine learning. As a result, many of its applications have been in the field of robotics (such as autonomous flight control). The current focus of RL research, however, has been focused on games such as classical board games like Chess and Go, as well as computer games from the simple such as Sonic the Hedgehog to more complex ones such as StarCraft 2 and DOTA 2.</p>
 <p>The main reason behind using games to build and develop RL algorithms is due to two main factors:</p>
@@ -735,16 +698,10 @@ while n &lt;= N do:
   Increment n
 end while
 Return a solution x out of the evaluated points for which f(x) was best</code></pre>
-<p>The Gaussian process prior helps define the uncertainty in the black-box function. At each evaluated point, we squash the uncertainty (to zero if the function evaluation has no noise), which affects the expected value <span class="math inline">\(\mu(x)\)</span> and uncertainty <span class="math inline">\(\sigma(x)\)</span> at the remaining unknown points.</p>
-<div class="figure">
-<img src="img/bayesopt_1.png" />
-
-</div>
+<p>A prior is used to define the uncertainty in the black-box function; the most popular is a Gaussian prior. At each evaluated point, we squash the uncertainty (to zero if the function evaluation has no noise), which affects the expected value <span class="math inline">\(\mu(x)\)</span> and uncertainty <span class="math inline">\(\sigma(x)\)</span> at the remaining unknown points.</p>
+<p><img src="img/bayesopt_1.png" /></p>
 <p>The acquisition function (which we will leave to the following excellent resources to discuss) suggest the next point to evaluate.</p>
-<div class="figure">
-<img src="img/bayesopt_2.png" />
-
-</div>
+<p><img src="img/bayesopt_2.png" /></p>
 <p>Useful Resources:</p>
 <ul>
 <li><a href="https://bearloga.github.io/bayesopt-tutorial-r/">A tutorial on Bayesian optimization in R</a></li>
@@ -757,7 +714,7 @@ Return a solution x out of the evaluated points for which f(x) was best</code></
 <div class="footnotes">
 <hr />
 <ol start="1">
-<li id="fn1"><p><a href="https://towardsdatascience.com/applied-deep-learning-part-3-autoencoders-1c083af4d798" class="uri">https://towardsdatascience.com/applied-deep-learning-part-3-autoencoders-1c083af4d798</a><a href="techniques.html#fnref1">↩</a></p></li>
+<li id="fn1"><p><a href="https://towardsdatascience.com/applied-deep-learning-part-3-autoencoders-1c083af4d798" class="uri">https://towardsdatascience.com/applied-deep-learning-part-3-autoencoders-1c083af4d798</a><a href="techniques.html#fnref1" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
 <script src="lib/js/jquery.min.js"></script>
@@ -774,11 +731,13 @@ Return a solution x out of the evaluated points for which f(x) was best</code></
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -786,12 +745,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -803,6 +761,10 @@ gitbook.start({
 "text": "Edit"
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -819,10 +781,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

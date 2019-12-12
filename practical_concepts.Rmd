@@ -42,6 +42,14 @@ Useful Resources:
 
 - [CS 231N: Validation Sets for Hyperparameter Tuning](http://cs231n.github.io/classification/#val)
 
+## Kernelization
+
+With kernelization, SVMs and other linear techniques can fit nonlinear decision boundaries. For example, imagine your data looks like this:
+
+![](img/svm_1.png)
+
+Clearly a diagonal line is not going to fit this data well; it would cut through the middle of both categories. SVM allows the classifier to learn a nonlinear decision boundary by using the “kernel trick,” which maps the data to a higher-dimensional space, then linearly separates the data in this higher-dimensional space. This translates to more complex decision boundaries in the lower-level space.
+
 ## Transfer Learning
 
 Transfer learning, as its name suggests, is the technique of using knowledge learned from one task and applying it to a new but related task. For example, knowledge learned while trying to figure out how to classify images (of animals) into various animal groups can be transferred to some degree to the task of classifying images (of dogs) into various dog breeds. 

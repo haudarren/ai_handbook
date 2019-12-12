@@ -2,6 +2,8 @@
 
 ## Libraries
 
+- [Tensorflow](https://www.tensorflow.org/)
+
 - [Fast.ai](https://docs.fast.ai)
     - [Github page](https://github.com/fastai/fastai)
     - Simplifies training fast and accurate neural nets using modern best practices, abstracting away all of the nitty gritty work that can come with implementing deep neural networks in practice.

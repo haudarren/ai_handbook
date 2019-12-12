@@ -14,7 +14,7 @@ Useful resources:
 
 Machine learning (ML) is a set of techniques for enabling a machine to learn certain tasks, and as such, ML is a subset of AI.  Many techniques can be utilized for ML, including logistic regression, support vector machines, Gaussian mixture models (we’ll get into these later).  Most of these techniques require engineers to identify what’s known as “features” to train the ML models - for example, square footage, number of beds, and ZIP codes could be features for an ML algorithm predicting home prices.
 
-The most recent exciting developments in ML derive from a particular subset called deep learning (DL).  Deep learning employs neural networks (also more on this later) to identify which features are most useful for the task at hand.  So now, our models can not only learn how to predict outcomes, but they can also learn how to get better at predicting outcomes.
+The most recent exciting developments in ML derive from a particular subset called deep learning (DL).  Deep learning employs neural networks (also more on this later) to learn more complex representations of input features that are most useful for the task at hand.
 
 ![](img/ai_ml_dl.png)
 

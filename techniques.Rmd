@@ -47,7 +47,6 @@ Summary:
 - Outputs:
     - Labels for all of the previously unlabeled vectors
 - Potential pitfalls:
-    - Overfitting the dataset (high variance). Finding a line that is too specific to the training examples and doesn’t generalize well to the new examples. 
     - Not flexible enough for more complex datasets (high bias). Maybe the relationship between square footage and housing price isn’t linear! In that case, linear regression would not be the best choice; k-nearest-neighbors or some other approach that allows more complex decision boundaries would be better-suited.
 
 Useful Resources:
@@ -124,7 +123,7 @@ Useful Resources:
 
 ### Logistic Regression
 
-Logistic regression is similar to linear regression in assuming a linear relationship between the dependent and independent variables. However, its name is misleading because unlike linear regression, it is used for classification.
+Logistic regression is similar to linear regression in assuming a linear relationship between the dependent and independent variables. However, it is most often used for classification tasks.
 
 The model outputs a probability that a training example belongs to each category. For example, it will calculate the probability that a tumor is benign or malignant. To compute this probability, logistic regression first computes the same linear function `Wx + b` on the input `x`, then feeds the result into a sigmoid function, which maps to outputs between 0 and 1, inclusive. This final output can then be interpreted as a probability. (Logistic regression can also be generalized to consider more than two categories. See sidenote.)
 
@@ -181,13 +180,7 @@ Useful Resources:
 
 ### Support Vector Machines (SVM)
 
-Support Vector Machines are used for classification: they try to find a line that separates data in one category from data in another category. However, they provide two big improvements on logistic regression. First, they can fit nonlinear decision boundaries. For example, imagine your data looks like this:
-
-![](img/svm_1.png)
-
-Clearly a diagonal line is not going to fit this data well; it would cut through the middle of both categories. SVM allows the classifier to learn a nonlinear decision boundary by using the “kernel trick,” which maps the data to a higher-dimensional space, then linearly separates the data in this higher-dimensional space. This translates to more complex decision boundaries in the lower-level space.
-
-SVMs can also improve classification by explicitly trying to maximize the space between the two categories. This space is called the “margin.” In the diagram below, the model found a line C that best maximized the distance between the two categories.
+Support Vector Machines are used for classification: they try to find a line that separates data in one category from data in another category. You can use SVMs if classification is improved by maximizing the space between the two categories. This space is called the “margin.” In the diagram below, the model found a line C that best maximized the distance between the two categories.
 
 ![](img/svm_2.png)
 
@@ -491,7 +484,7 @@ end while
 Return a solution x out of the evaluated points for which f(x) was best
 ```
 
-The Gaussian process prior helps define the uncertainty in the black-box function.  At each evaluated point, we squash the uncertainty (to zero if the function evaluation has no noise), which affects the expected value $\mu(x)$ and uncertainty $\sigma(x)$ at the remaining unknown points.
+A prior is used to define the uncertainty in the black-box function; the most popular is a Gaussian prior.  At each evaluated point, we squash the uncertainty (to zero if the function evaluation has no noise), which affects the expected value $\mu(x)$ and uncertainty $\sigma(x)$ at the remaining unknown points.
 
 ![](img/bayesopt_1.png)
 
